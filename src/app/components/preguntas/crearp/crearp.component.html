@@ -1,0 +1,32 @@
+<div class="form-group">
+    <label for="">Seleccione la encuesta <span *ngIf="idEncuesta > 0" class="badge badge-primary" matTooltip="Codigo de la encuesta" aria-label="Button that displays a tooltip when focused or hovered over">{{ idEncuesta }}</span></label>
+    <input type="text" [ngModel]="tituloEncuesta" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <small id="" class="form-text text-muted">Seleccione la encuesta para crear las preguntas</small>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Buscar encuesta
+    </button>
+</div>
+<app-searchencuesta (envioDato)="asignarEncuesta($event)"></app-searchencuesta>
+<form [formGroup]="frmRegistro" (ngSubmit)="onSubmit()" autocomplete="off">
+    <ng-container *ngFor="let control of pregunta.controls; let i = index">
+        <div [formGroup]="control" class="row">
+            <div class="form-group col-9">
+                <input class="form-control" formControlName="pregunta" aria-describedby="name" placeholder="Escriba la pregunta Aqui" required>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-danger btn-block" type="button" (click)="BorrarPregunta(i)">Borrar</button>
+            </div>
+        </div>
+    </ng-container>
+    <div class="row pt-2">
+        <div class="col">
+            <button class="btn btn-primary btn-block" type="button" (click)="addQ()">+ Agregar</button>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col">
+            <button class="btn btn-primary btn-block" type="submit">Guardar</button>
+        </div>
+    </div>
+</form>
+<app-confirmsg [msg]="msg"></app-confirmsg>

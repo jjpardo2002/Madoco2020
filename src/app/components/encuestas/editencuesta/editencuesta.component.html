@@ -1,0 +1,133 @@
+<div class="mat-elevation-z8">
+    <div class="row pb-2">
+        <div class="col-12">
+            <form>
+                <input (keyup)="applyFilter($event)" class="form-control mr-sm-2" type="text" placeholder="Search">
+            </form>
+        </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id_enc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Encuesta </th>
+            <td mat-cell *matCellDef="let element"> {{element.id_enc}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="titulo_enc">
+            <th mat-header-cell *matHeaderCellDef> Titulo de la encuesta </th>
+            <td mat-cell *matCellDef="let element"> {{element.titulo_enc}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="detalle_enc">
+            <th mat-header-cell *matHeaderCellDef> Informacion adicinal de la encuesta </th>
+            <td mat-cell *matCellDef="let element"> {{element.detalle_enc}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"><button class="btn btn-primary" (click)="SearchRowData(element.id_enc)">Editar</button></td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="del">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"><button class="btn btn-danger" (click)="dialogo(element.id_enc)">Eliminar</button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="OkMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Mensaje del Sistema</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                {{msg}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="WMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Mensaje del Sistema</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            </div>
+            <div class="modal-body">
+                {{msg}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="DeleteRowData()">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="frmeditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="frmRegistro" (ngSubmit)="editar()" autocomplete="off">
+                    <div class="form-group">
+                        <label for="">Titulo de la encuesta</label>
+                        <input type="text" class="form-control" name="titulo_enc" id="titulo_enc" formControlName="titulo_enc" [class.is-invalid]="validateNombre" required>
+                        <small *ngIf="validateNombre" class="text-danger">
+                     <ng-container *ngFor="let validation of VALIDATION_MESSAGE.titulo_enc">
+                      <div *ngIf="frmRegistro.get('titulo_enc').hasError(validation.type) && frmRegistro.get('titulo_enc').dirty">
+                        {{validation.message}}
+                      </div>
+                     </ng-container>
+                    </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Información adicional</label>
+                        <textarea class="form-control" name="detalle_enc" id="detalle_enc" rows="5" formControlName="detalle_enc" [maxlength]="maxChars"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-primary btn-block">Guardar cambios</button>
+                        </div>
+                        <div class="col">
+                            <button (click)="limpiar()" class="btn btn-outline-info btn-block">Cerrar</button>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <div *ngIf="idError == 0" class="alert alert-success" role="alert">
+                            {{msg}}
+                        </div>
+                        <div *ngIf="idError > 0" class="alert alert-danger" role="alert">
+                            {{msg}}
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

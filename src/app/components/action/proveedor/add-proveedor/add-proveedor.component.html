@@ -1,0 +1,153 @@
+<div class="animated fadeIn fast jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Inscripcion de Proveedores</h1>
+        <p class="lead">Agregar Nuevos Proveedores</p>
+    </div>
+</div>
+<mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="proveedorFormGroup">
+        <mat-card style="padding: 5px;">
+            <form [formGroup]="proveedorFormGroup">
+                <ng-template matStepLabel>Informacion del proveedor</ng-template>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <mat-form-field hintLabel="Max 20 Caracteres" class="example-full-width">
+                                <mat-label>Nit o Cedula</mat-label>
+                                <input matInput #sizeId maxlength="20" formControlName="id" placeholder="Id. Proveedor">
+                                <mat-hint align="end">{{sizeId.value?.length || 0}}/20</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field hintLabel="Max 1 Caracteres" class="example-full-width">
+                                <mat-label>Digito de Verificacion</mat-label>
+                                <input matInput #sizeDV maxlength="1" formControlName="dv" placeholder="DV">
+                                <mat-hint align="end">{{sizeDV.value?.length || 0}}/1</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field hintLabel="Max 250 Caracteres" class="example-full-width">
+                                <mat-label>Nombre o Razon Social</mat-label>
+                                <input matInput #sizeNom maxlength="250" formControlName="name" placeholder="Nombre o Razon Social">
+                                <mat-hint align="end">{{sizeNom.value?.length || 0}}/250</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-form-field hintLabel="Max 250 Caracteres" class="example-full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput #sizeEmail maxlength="250" formControlName="email" placeholder="Id. Proveedor">
+                                <mat-hint align="end">{{sizeEmail.value?.length || 0}}/250</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field hintLabel="Max 250 Caracteres" class="example-full-width">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput #sizeDir maxlength="1" formControlName="direccion" placeholder="Dirección">
+                                <mat-hint align="end">{{sizeDir.value?.length || 0}}/250</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row margenRow">
+                        <div class="col-3" style="margin-top: 15px;">
+                            <span matBadge="{{idPais}}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombrePais }}</mat-label></span>
+                        </div>
+                        <div class="col-1" style="margin-top: 15px;">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bpaises">
+                        <mat-icon>search</mat-icon>
+                      </button>
+                        </div>
+                        <div class="col-3" style="margin-top: 15px;">
+                            <span matBadge="{{ idRegion }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreRegion }}</mat-label></span>
+                        </div>
+                        <div class="col-1" style="margin-top: 15px;">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bregiones" (click)="childRegion.getRegiones()">
+                      <mat-icon>search</mat-icon>
+                    </button>
+                        </div>
+                        <div class="col-3" style="margin-top: 15px;">
+                            <input type="hidden" formControlName="id_ciudad">
+                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">Ciudad</mat-label></span>
+                        </div>
+                        <div class="col-1" style="margin-top: 15px;">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar">
+                    <mat-icon>search</mat-icon>
+                  </button>
+                        </div>
+                    </div>
+
+                    <div class="row margenRow">
+                        <div class="col-3" style="margin-top: 15px;">
+                            <input type="hidden" formControlName="id_rol">
+                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">Rol .....</mat-label></span>
+                        </div>
+                        <div class="col-1" style="margin-top: 15px;">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar">
+                          <mat-icon>search</mat-icon>
+                        </button>
+                        </div>
+                        <div class="col-3" style="margin-top: 15px;">
+                            <input type="hidden" formControlName="id_rol">
+                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before" matBadgeColor="accent"></span>
+                            <mat-label class="lblinfo">Regimen</mat-label>
+                        </div>
+                        <div class="col-1" style="margin-top: 15px;">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar">
+                        <mat-icon>search</mat-icon>
+                      </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-card>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+
+</mat-horizontal-stepper>
+
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="bpaises" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Buscador de Paises</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            </div>
+            <div class="modal-body">
+                <app-bpais (envioDato)="asignarPais($event)"></app-bpais>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="bregiones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Buscador de Regiones</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+            </div>
+            <div class="modal-body">
+                <app-bregion [idPaisR]="idPais" (envioDato)="asignarRegion($event)" #childRegion></app-bregion>
+            </div>
+        </div>
+    </div>
+</div>

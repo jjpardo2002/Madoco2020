@@ -1,0 +1,26 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.example-container .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.lblinfo {
+    padding-left: 5px;
+}
+
+.margenRow {
+    padding-left: 5px;
+}
+
+.mat-badge-content {
+    background: gray !important;
+    color: white !important;
+}

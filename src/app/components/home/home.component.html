@@ -1,0 +1,16 @@
+<div class="row">
+    <!-- *ngFor="let dato of opciones -->
+    <div class="animated fadeIn fast col-md-6 col-xl-4 pb-2" *ngFor="let dato of opciones">
+        <div class="card" id="{{dato.idname}}">
+            <div style="text-align: center;">
+                <img [src]="dato.imagen" class="card-img-top">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{dato.titulo}}</h5>
+                <p class="card-text">{{dato.descripcion}}</p>
+            </div>
+            <button (click)="irA(dato.pagina)" class="btn btn-outline-primary btn-block">Crear</button>
+        </div>
+
+    </div>
+</div>

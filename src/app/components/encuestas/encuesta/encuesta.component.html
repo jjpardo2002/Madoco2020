@@ -1,0 +1,22 @@
+<div class="animated fadeIn fast jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Gestion y Administración de encuestas</h1>
+        <p class="lead">Lea detalladamente la informacion solicitada. Para terminar la encuesta haga click en finalizar.</p>
+    </div>
+</div>
+<div class="row">
+    <!-- *ngFor="let dato of opciones -->
+    <div class="animated fadeIn fast col-md-6 col-xl-4 pb-2" *ngFor="let dato of opciones">
+        <div class="card" id="{{dato.idname}}">
+            <div style="text-align: center;">
+                <img [src]="dato.imagen" class="card-img-top">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{dato.titulo}}</h5>
+                <p class="card-text">{{dato.descripcion}}</p>
+            </div>
+            <button (click)="irA(dato.pagina)" class="btn btn-outline-primary btn-block">Crear</button>
+        </div>
+
+    </div>
+</div>

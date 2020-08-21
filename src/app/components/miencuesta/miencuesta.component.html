@@ -1,0 +1,99 @@
+<div class="animated fadeIn fast jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Encuesta satisfaccion</h1>
+        <p class="lead">Este modulo permitira realizar encuestas de satisfaccion de clientes</p>
+    </div>
+</div>
+<form [formGroup]="frmRegistro" (ngSubmit)="onSubmit()">
+    <div class="form-row align-items-center">
+        <div class="col-sm-3 my-1">
+            <label class="sr-only" for="inlineFormInputName">Id. Cliente</label>
+            <input id="id_ter_fk" formControlName="id_ter_fk" type="text" class="form-control" id="inlineFormInputName" placeholder="Id. Cliente" readonly>
+        </div>
+        <div class="col-sm-6 my-1">
+            <label class="sr-only" for="inlineFormInputGroupUsername">Nombre del cliente</label>
+            <div class="input-group">
+                <input #nombre type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Nombre del cliente" readonly>
+            </div>
+        </div>
+        <div class="col-auto my-1">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bclientes">Buscar</button>
+        </div>
+    </div>
+    <div class="form-row align-items-center">
+        <div class="col-sm-3 my-1">
+            <label class="sr-only" for="inlineFormInputName">Id. Encargado</label>
+            <input type="text" formControlName="id_res_fk" class="form-control" id="inlineFormInputName" placeholder="Id. Encargado" readonly>
+        </div>
+        <div class="col-sm-6 my-1">
+            <label class="sr-only" for="inlineFormInputGroupUsername">Nombre del Responsable</label>
+            <div class="input-group">
+                <input #nombreper type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Nombre del responsable" readonly>
+            </div>
+        </div>
+        <div class="col-auto my-1">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bpersonal">Buscar</button>
+        </div>
+    </div>
+    <div class="form-row align-items-center">
+        <div class="col-sm-3 my-1">
+            <mat-form-field appearance="fill">
+                <mat-label>Fecha de la encuesta</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="fecha_enm">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div *ngFor="let answer of rtas.controls; let i = index" class="list-group list-group-flush">
+        <div class="list-group-item">
+            <div [formGroup]="answer">
+                <div class="row" *ngFor="let encuesta of encu;let j = index">
+                    <div class="col" *ngIf="i==j">
+                        <label>{{encuesta.pregunta}}</label>
+                        <select formControlName="id_rta" class="form-control">
+                        <option value="{{rtaf.id_rta}}" *ngFor="let rtaf of encuesta.rtas">{{rtaf.descripcion_rta}} </option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+
+</form>
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="bclientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Buscador de clientes</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <app-clientes (envioDato)="asignarEncuesta($event)"></app-clientes>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="bpersonal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Buscador de personal MadocoXXI</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            </div>
+            <div class="modal-body">
+                <app-personal (envioDato)="asignarPersona($event)"></app-personal>
+            </div>
+        </div>
+    </div>
+</div>
