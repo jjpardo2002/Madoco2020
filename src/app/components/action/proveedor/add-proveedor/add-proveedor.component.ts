@@ -38,6 +38,8 @@ export class AddProveedorComponent implements OnInit,
   idPais = '0';
   nombreRegion = 'Sin Seleccion';
   idRegion = '0';
+  nombreCiudad = 'Sin Seleccion';
+  idCiudad = '0';
   dataTable: any;
   // dtOptions: any;
   tableData: Countries[];
@@ -130,58 +132,6 @@ export class AddProveedorComponent implements OnInit,
       this.tableData = data;
       console.log(this.tableData);
     });
-    /*this.ciudadService.getAlls().subscribe(datas => {
-      this.tableData = datas;
-      this.dtOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        data: this.tableData,
-        language: {
-          emptyTable: '',
-          zeroRecords: 'No hay coincidencias',
-          lengthMenu: 'Mostrar _MENU_ elementos',
-          search: 'Buscar:',
-          info: 'De _START_ a _END_ de _TOTAL_ elementos',
-          infoEmpty: 'De 0 a 0 de 0 elementos',
-          infoFiltered: '(filtrados de _MAX_ elementos totales)',
-          paginate: {
-            first: 'Prim.',
-            last: 'Últ.',
-            next: 'Sig.',
-            previous: 'Ant.'
-          },
-        },
-        columns: [
-          {title: 'ID', data: 'id'},
-          {title: 'Ciudad', data: 'nombre'},
-          {
-            title: 'Accion',
-            render: (data: any, type: any, row: any, meta) => {
-              return '<a class='btn btn-primary' (click)='Seleccion(data)'>Seleccionar</a>'; }
-            },
-            {
-              targets: -1,
-              data: null,
-              defaultContent: '<button class='btn btn-primary' (click)='Seleccion(data)'>Click!</button>'
-            },
-        ],
-        /*rowCallback: (row: Node, data: any[] | object, index: number) => {
-          const self = this;
-          // Unbind first in order to avoid any duplicate handler
-          // (see https://github.com/l-lin/angular-datatables/issues/87)
-          $('td', row).unbind('click');
-          $('td', row).bind('click', () => {
-            self.someClickHandler(data);
-          });
-          return row;
-        },
-
-      };
-    }, err => {}, () => {
-      this.dataTable = $(this.table.nativeElement);
-      this.dataTable.DataTable(this.dtOptions);
-    });*/
   }
   seleccion(info: any): void
   {
@@ -315,6 +265,12 @@ export class AddProveedorComponent implements OnInit,
   asignarRegion(ELEMENT_ITEM: Regions[]){
     this.nombreRegion = ELEMENT_ITEM[0].nombre;
     this.idRegion = ELEMENT_ITEM[0].id;
+    // this.nompais.nativeElement.value = ELEMENT_ITEM[0].nombre;
+    // this.proveedorFormGroup.get('id_ter_fk').patchValue(ELEMENT_ITEM[0].id);
+  }
+  asignarCiudad(ELEMENT_ITEM: States[]){
+    this.nombreCiudad = ELEMENT_ITEM[0].nombre;
+    this.idCiudad = ELEMENT_ITEM[0].id;
     // this.nompais.nativeElement.value = ELEMENT_ITEM[0].nombre;
     // this.proveedorFormGroup.get('id_ter_fk').patchValue(ELEMENT_ITEM[0].id);
   }

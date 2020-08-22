@@ -68,10 +68,10 @@
                         </div>
                         <div class="col-3" style="margin-top: 15px;">
                             <input type="hidden" formControlName="id_ciudad">
-                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">Ciudad</mat-label></span>
+                            <span matBadge="{{ idCiudad }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreCiudad }}</mat-label></span>
                         </div>
                         <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar">
+                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bciudades" (click)="childCiudad.getCiudades()">
                     <mat-icon>search</mat-icon>
                   </button>
                         </div>
@@ -147,6 +147,23 @@
             </div>
             <div class="modal-body">
                 <app-bregion [idPaisR]="idPais" (envioDato)="asignarRegion($event)" #childRegion></app-bregion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="bciudades" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Buscador de Ciudades</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-bstate [idRegion]="idRegion" (envioDato)="asignarCiudad($event)" #childCiudad></app-bstate>
             </div>
         </div>
     </div>

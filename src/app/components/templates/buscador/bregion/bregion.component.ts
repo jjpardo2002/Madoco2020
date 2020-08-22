@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource, MatTable} from '@angular/material/table';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+// import { HttpClient, HttpResponse } from '@angular/common/http';
 import { MatSort } from '@angular/material/sort';
-import { ContriesService } from '../../../services/contries.service';
+// import { ContriesService } from '../../../services/contries.service';
 import { Regions } from '../../../../models/regions';
 import { RegionsService } from '../../../services/regions.service';
 declare var $: any;
@@ -35,7 +35,6 @@ export class BregionComponent implements OnInit, AfterViewInit {
     this.getRegiones();
   }
   ngOnInit(): void {
-    console.log('onInit called');
     this.dataSource.paginator = this.paginator;
     this.dataSource.paginator.pageSize = 5;
 
