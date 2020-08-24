@@ -82,6 +82,8 @@ import { PersonalComponent } from './components/templates/buscador/personal/pers
 import { BpaisComponent } from './components/templates/buscador/bpais/bpais.component';
 import { BregionComponent } from './components/templates/buscador/bregion/bregion.component';
 import { BstateComponent } from './components/templates/buscador/bstate/bstate.component';
+import { BrolsComponent } from './components/templates/buscador/brols/brols.component';
+import { TypepersonComponent } from './components/templates/buscador/typeperson/typeperson.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +119,8 @@ import { BstateComponent } from './components/templates/buscador/bstate/bstate.c
     BpaisComponent,
     BregionComponent,
     BstateComponent,
+    BrolsComponent,
+    TypepersonComponent,
 
   ],
   imports: [
