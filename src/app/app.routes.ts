@@ -14,6 +14,11 @@ import { CrearpComponent } from './components/preguntas/crearp/crearp.component'
 import { ListarpComponent } from './components/preguntas/listarp/listarp.component';
 import { ModificarpComponent } from './components/preguntas/modificarp/modificarp.component';
 import { MiencuestaComponent } from './components/miencuesta/miencuesta.component';
+import { GcotizacionComponent } from './components/gcotizacion/gcotizacion.component';
+import { ValidarComponent } from './components/cotizacion/validar/validar.component';
+import { OrdenComponent } from './components/compras/ordenc/orden/orden.component';
+import { MetasComponent } from './components/cotizacion/metas/metas.component';
+import { InformeindComponent } from './components/cotizacion/informeind/informeind.component';
 
 const APP_ROUTES: Routes = [
     {path: 'home', component: HomeComponent},
@@ -23,7 +28,8 @@ const APP_ROUTES: Routes = [
     {path: 'proveedor',
       component: ProveedorComponent,
       children: [
-        {path: 'add', component: AddProveedorComponent}
+        {path: 'add', component: AddProveedorComponent},
+        {path: '**', pathMatch: 'full', redirectTo: 'add'}
       ]
     },
     {path: 'encuestas',
@@ -44,7 +50,12 @@ const APP_ROUTES: Routes = [
     ]
   },
   {path: 'miencuesta', component: MiencuestaComponent},
-    {path: '**', pathMatch: 'full', redirectTo: 'home'}
+  {path: 'gcoti', component: GcotizacionComponent},
+  {path: 'metas', component: MetasComponent},
+  {path: 'validarc', component: ValidarComponent},
+  {path: 'ordenc', component: OrdenComponent},
+  {path: 'infoind', component: InformeindComponent},
+  {path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 
-export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES);
+export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES, {useHash: true});

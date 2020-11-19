@@ -5,12 +5,19 @@ import { MiEmpleado } from '../../models/mi-empleado';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MiCliente } from '../../models/mi-cliente';
+import { ProveedorRequest } from '../../models/proveedor-request';
 @Injectable({
   providedIn: 'root'
 })
 export class PersonsService {
   URL_BASE = environment.API_URL;
   constructor(private http: HttpClient) { }
+  InsertRecord(data: any): Observable<any>{
+    return this.http.post(`${this.URL_BASE}personas/crear`, data);
+  }
+  UpdateRecord(id: any, data: any): Observable<any>{
+    return this.http.put(`${this.URL_BASE}personas/actualizar/${id}`, data);
+  }
   cargarEmpleados(){
     return this.http.get(`${this.URL_BASE}personas/empleado`)
     .pipe(
@@ -36,9 +43,20 @@ export class PersonsService {
       map ( this.crearArregloCust)
     );
   }
+  cargarProveedores(){
+    return this.http.get(`${this.URL_BASE}personas/proveedor`)
+    .pipe(
+      map ( this.crearArregloProveedor)
+    );
+  }
   BuscarRegistroCli(id: any){
     return this.http.get(`${this.URL_BASE}personas/buscar/${id}`).pipe(
       map ( this.crearArregloCust)
+    );
+  }
+  BuscarRegistroProv(id: any){
+    return this.http.get(`${this.URL_BASE}personas/buscar/${id}`).pipe(
+      map ( this.crearArregloProveedor)
     );
   }
   crearArregloCust(custObj: object){
@@ -48,5 +66,13 @@ export class PersonsService {
       encuesta.push(customer);
     });
     return encuesta;
+  }
+  crearArregloProveedor(custObj: object){
+    const prov: ProveedorRequest[] = [];
+    Object.keys( custObj ).forEach( key => {
+      const proveedor: ProveedorRequest = custObj[key];
+      prov.push(proveedor);
+    });
+    return prov;
   }
 }

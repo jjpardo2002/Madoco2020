@@ -1,7 +1,9 @@
 <div class="animated fadeIn fast jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Encuesta satisfaccion</h1>
-        <p class="lead">Este modulo permitira realizar encuestas de satisfaccion de clientes</p>
+        <p class="lead">Objetivo</p>
+        <p class="lead">Dentro del proceso interno de calidad, tenemos contemplado analizar el Grado de Satisfacción de los Clientes con relación a la prestación de nuestros servicios. Por tal razón, me permito enviarle la La Encuesta de Satisfacción del Cliente, la
+            cual contribuye al mejoramiento continuo de nuestra empresa, reflejandose en mejores servicios y beneficios para todos ustedes, que son nuestra razón de ser, gracias por su colaboración.</p>
     </div>
 </div>
 <form [formGroup]="frmRegistro" (ngSubmit)="onSubmit()">
@@ -62,9 +64,18 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
-
+    <div class="container m-3">
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            <div class="col">
+                <a [routerLink]="['/encuesta']" class="btn btn-primary">Ir a gestion de encuestas y cotizaciones</a>
+            </div>
+        </div>
+    </div>
 </form>
+
 <!-- Modal -->
 <div class="modal animated fade fadeIn" id="bclientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">

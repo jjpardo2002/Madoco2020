@@ -16,6 +16,7 @@ import { Regions } from '../../../../models/regions';
 import { BregionComponent } from '../../../templates/buscador/bregion/bregion.component';
 import { RegionsService } from 'src/app/components/services/regions.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { PersonsService } from '../../../services/persons.service';
 
 declare var $: any;
 declare var jQuery: any;
@@ -40,6 +41,10 @@ export class AddProveedorComponent implements OnInit,
   idRegion = '0';
   nombreCiudad = 'Sin Seleccion';
   idCiudad = '0';
+  nombreRol = 'Sin Seleccion';
+  idRol = '0';
+  nombreTPer = 'Sin Seleccion';
+  idTPer = '0';
   dataTable: any;
   // dtOptions: any;
   tableData: Countries[];
@@ -78,7 +83,8 @@ export class AddProveedorComponent implements OnInit,
               private router: Router,
               private http: HttpClient,
               private renderer: Renderer2,
-              private regionService: RegionsService) {
+              private regionService: RegionsService,
+              private personService: PersonsService) {
 
     }
   ngOnInit(): void {
@@ -86,7 +92,6 @@ export class AddProveedorComponent implements OnInit,
     jQuery('.js-ciudades-select2').select2(); // initialize select2 to particular input
     const enrutamiento = this.router;
     this.loadCiudades();
-    this.calcular();
     this.proveedorFormGroup = this.formBuilder.group({
       id: ['', Validators.required],
       dv: ['', Validators.required],
@@ -252,8 +257,8 @@ export class AddProveedorComponent implements OnInit,
     return digito_chequeo;
     }
   // Calcular
-  calcular() {
-   console.log('860002693-' + this.isCheckOK('860002693'));
+  calcular(id: string) {
+    this.proveedorFormGroup.get('dv').patchValue(this.isCheckOK(id));
   }
   asignarPais(ELEMENT_ITEM: CountriesRequest[]){
     this.nombrePais = ELEMENT_ITEM[0].nombre;
@@ -271,8 +276,21 @@ export class AddProveedorComponent implements OnInit,
   asignarCiudad(ELEMENT_ITEM: States[]){
     this.nombreCiudad = ELEMENT_ITEM[0].nombre;
     this.idCiudad = ELEMENT_ITEM[0].id;
+    this.proveedorFormGroup.get('id_ciudad').patchValue(ELEMENT_ITEM[0].id);
     // this.nompais.nativeElement.value = ELEMENT_ITEM[0].nombre;
-    // this.proveedorFormGroup.get('id_ter_fk').patchValue(ELEMENT_ITEM[0].id);
+    // this.proveedorFormGroup.get('id_ciudad').patchValue(ELEMENT_ITEM[0].id);
+  }
+  asignarRol(ELEMENT_ITEM: States[]){
+    this.nombreRol = ELEMENT_ITEM[0].nombre;
+    this.idRol = ELEMENT_ITEM[0].id;
+    this.proveedorFormGroup.get('id_rol').patchValue(ELEMENT_ITEM[0].id);
+    // this.nompais.nativeElement.value = ELEMENT_ITEM[0].nombre;
+    // this.proveedorFormGroup.get('id_ciudad').patchValue(ELEMENT_ITEM[0].id);
+  }
+  asignarTipoPer(ELEMENT_ITEM: States[]){
+    this.nombreTPer = ELEMENT_ITEM[0].nombre;
+    this.idTPer = ELEMENT_ITEM[0].id;
+    this.proveedorFormGroup.get('id_regimen').patchValue(ELEMENT_ITEM[0].id);
   }
   getRegiones()
   {
@@ -281,6 +299,28 @@ export class AddProveedorComponent implements OnInit,
         this.REGION_DATA = resp;
       });
     // this.lstEncuestas = this.listaService.QueryRecord();
+  }
+  enviarDatos()
+  {
+    console.log(this.proveedorFormGroup.value);
+    $('#confirmar').modal('hide');
+    /*if (this.proveedorFormGroup.invalid){
+      return Object.values(this.proveedorFormGroup.controls).forEach( control => {
+        control.markAsTouched();
+      });
+    }
+    this.personService.InsertRecord(this.proveedorFormGroup.value).subscribe(resp => {
+      if (resp.ErrNumber === 0)
+      {
+        // this.msg = resp.Description;
+      }
+      else
+      {
+        // this.msg = resp.Description;
+      }
+     $('#OkMessage').modal('show');
+      // this.frmRegistro.reset();
+    });*/
   }
 }
 

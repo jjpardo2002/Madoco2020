@@ -1,0 +1,200 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Creacion indicadores de metas</h1>
+        <p class="lead">Definicion de metas para cotizaciones</p>
+    </div>
+</div>
+<div class="container">
+    <form [formGroup]="frmRegistro">
+        <div class="row">
+            <div class="form-group col-3">
+                <label for="ord_comp">Año de la meta</label>
+                <input formControlName="year_met" type="number" class="form-control" id="year_met" [class.is-invalid]="year_metNoValido">
+                <small *ngIf="year_metNoValido" class="text-danger">
+                Debe digitar un año para definir una meta
+              </small>
+                <small *ngIf="!year_metNoValido" id="year_met" class="form-text text-muted">Numero de orden de compra</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-3">
+                <label for="semestre_met">Semestre</label>
+                <input type="number" class="form-control" name="semestre_met" id="semestre_met" formControlName="semestre_met" [class.is-invalid]="semestre_metNoValido">
+                <small *ngIf="semestre_metNoValido" class="text-danger">
+                 Debe Indicar un semestre
+                </small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-3">
+                <label for="fecha_com">Meta</label>
+                <input class="form-control" type="number" formControlName="meta_met" [class.is-invalid]="meta_metNoValido">
+                <small id="meta_met" class="form-text text-muted">Porcentaje de meta para el semestre</small>
+                <small *ngIf="meta_metNoValido" class="text-danger">
+                  Debe Indicar el porcentaje a asignar para el semestre
+                 </small>
+            </div>
+        </div>
+        <div class="row justify-content-start pt-1">
+            <div class="col-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#confirmar">Crear Indicador</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="row pb-2">
+                <div class="col-12">
+                    <form>
+                        <input (keyup)="applyFilter($event)" class="form-control mr-sm-2" type="text" placeholder="Search">
+                    </form>
+                </div>
+            </div>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" width="100%">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id_met">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Indicador </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id_met}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="year_met">
+                        <th mat-header-cell *matHeaderCellDef>Año </th>
+                        <td mat-cell *matCellDef="let element"> {{element.year_met}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="semestre_met">
+                        <th mat-header-cell *matHeaderCellDef>Semestre</th>
+                        <td mat-cell *matCellDef="let element"> {{element.semestre_met}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element"><button class="btn btn-primary" (click)="Buscareditar(element.id_met)">Modificar</button></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="del">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element"><button class="btn btn-danger" (click)="SeleccionarB(element.id_met)">Borrar</button></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edicion de registros</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="frmRegistroE">
+                    <input type="hidden" name="id_met" formControlName="id_met">
+                    <div class="row">
+                        <div class="form-group col-3">
+                            <label for="ord_comp">Año de la meta</label>
+                            <input formControlName="year_met" type="number" class="form-control" id="year_met" [class.is-invalid]="year_metENoValido">
+                            <small *ngIf="year_metENoValido" class="text-danger">
+                      Debe digitar un año para definir una meta
+                    </small>
+                            <small *ngIf="!year_metNoValido" id="year_met" class="form-text text-muted">Numero de orden de compra</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="semestre_met">Semestre</label>
+                            <input type="number" class="form-control" name="semestre_met" id="semestre_met" formControlName="semestre_met" [class.is-invalid]="semestre_metENoValido">
+                            <small *ngIf="semestre_metENoValido" class="text-danger">
+                       Debe Indicar un semestre
+                      </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-5">
+                            <label for="fecha_com">Meta %</label>
+                            <input class="form-control" type="number" formControlName="meta_met" [class.is-invalid]="meta_metENoValido">
+                            <small *ngIf="meta_metENoValido" class="text-danger">
+                        Debe Indicar el porcentaje a asignar para el semestre
+                       </small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" (click)="onSubmitE()" class="btn btn-primary">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                Desea guardar los datos ingresados
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" (click)="onSubmit()" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="borrari" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                Desea eliminar el registro seleccionado
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" (click)="Borrar()" class="btn btn-danger">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="msgok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                {{mensaje}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

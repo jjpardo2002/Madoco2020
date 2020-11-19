@@ -1,0 +1,271 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Orden de Compra</h1>
+        <p class="lead">este modulo permitira gestionar ordenes de compra</p>
+    </div>
+</div>
+<div class="container">
+    <form [formGroup]="frmRegistro">
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="ord_comp">Nro Orden de Compra</label>
+                <input formControlName="ord_comp" type="email" class="form-control" id="ord_comp" aria-describedby="emailHelp" [class.is-invalid]="ord_compNoValido">
+                <small *ngIf="ord_compNoValido" class="text-danger">
+                </small>
+                <small *ngIf="!ord_compNoValido" id="emailHelp" class="form-text text-muted">Numero de orden de compra</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-5">
+                <label for="id_prov">Proveedor</label>
+                <input type="text" class="form-control" name="id_prov" id="id_prov" formControlName="id_prov" [class.is-invalid]="idproveedorNoValido">
+                <small *ngIf="idproveedorNoValido" class="text-danger">
+                  El proveedor es un campo requerido
+                </small>
+                <small *ngIf="!idproveedorNoValido" id="idprov" class="form-text text-muted">{{ nombreProv }}</small>
+            </div>
+            <div class="form-group col-3">
+                <button type="button" class="btn btn-danger" style="margin-top:20px;" data-toggle="modal" data-target="#bproveedor"><img src="assets/svg/buscar.svg" width="35px"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-3">
+                <label for="fecha_com">Fecha orden de compra</label>
+                <input class="form-control" type="date" formControlName="fecha_com">
+                <small id="fecha" class="form-text text-muted">Fecha emision orden de compra</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-5">
+                <label for="id_suc">Sucursal</label>
+                <input type="text" class="form-control" name="id_suc" id="id_suc" formControlName="id_suc" [class.is-invalid]="id_sucNoValido">
+                <small *ngIf="id_sucNoValido" class="text-danger">
+                  Debe seleccionar la sucursal que realiza la Orden de compra
+                </small>
+                <small *ngIf="!id_sucNoValido" id="idprov" class="form-text text-muted">{{ nombreSuc }}</small>
+            </div>
+            <div class="form-group col-3">
+                <button type="button" class="btn btn-danger" style="margin-top:20px;" data-toggle="modal" data-target="#bsucursal"><img src="assets/svg/buscar.svg" width="35px"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-1">
+                <label for="iva">Iva%</label>
+                <input class="form-control" type="number" value="0" name="valoriva" formControlName="valoriva" width="20px" #valoriva>
+            </div>
+            <div class="form-group col-1">
+                <label for="iva">Descuento(%)</label>
+                <input class="form-control" type="number" name="descuento" formControlName="descuento" width="20px" value="0" #descuento>
+            </div>
+            <div class="form-group col-3">
+                <label for="iva">Tipo de moneda</label>
+                <select class="form-control" id="id_tyc_fk" formControlName="id_tyc_fk">
+                  <option value="{{ item.id_tyc }}" *ngFor="let item of (resultsMonedas | async)">{{ item.descripcion_tyc }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row container" formArrayName="detalle_orden">
+            <div *ngFor="let detalles of ordenCompra.controls; let i = index" [formGroupName]="i" class="row">
+                <div class="col-2">
+                    <label for="id_suministro">Id</label>
+                    <input [ngClass]="{'form-control':true, 'is-invalid': detalles.get('id_suministro').invalid && detalles.get('id_suministro').touched}" type="text" formControlName="id_suministro">
+                    <small class="text-danger" *ngIf="detalles.get('id_suministro').errors?.required && detalles.get('id_suministro').touched">Id item no puede ser vacio</small>
+                </div>
+                <div class="col-1">
+                    <label for="item">Item</label>
+                    <input class="form-control" type="text" formControlName="item" readonly>
+                </div>
+                <div class="col-1">
+                    <label for="acc">Accion</label>
+                    <button type="button" class="btn btn-danger" (click)="AsignarData(i)"><img src="assets/svg/buscar.svg" width="25px"></button>
+                </div>
+                <div class="col-2">
+                    <label for="valor_compra">Valor</label>
+                    <input [ngClass]="{'form-control':true,'is-invalid': detalles.get('valor_compra').invalid && detalles.get('valor_compra').touched}" type="number" name="valor_compra" formControlName="valor_compra" width="20px" (keydown.enter)="CalcularSubtotal()" #vcompra>
+                    <small class="text-danger" *ngIf="detalles.get('valor_compra').errors?.required && detalles.get('valor_compra').touched">Valor de compra no puede ser vacio</small>
+                </div>
+
+                <div class="col-1">
+                    <label for="cantidad">Cantidad</label>
+                    <input class="txt-cantidad" [ngClass]="{'form-control':true,'is-invalid': detalles.get('cantidad').invalid && detalles.get('cantidad').touched}" type="number" formControlName="cantidad" (change)="CalcularSubtotal()" #cantidad>
+                    <small id="cantidadc" class="form-text text-muted">Cantidad</small>
+                    <small class="text-danger" *ngIf="detalles.get('cantidad').errors?.required && detalles.get('cantidad').touched">Cantidad de compra no puede ser vacio</small>
+                </div>
+                <div class="col-2">
+                    <input type="hidden" name="umcod" formControlName="umcod">
+                    <label for="umt">U. Medida</label>
+                    <input class="form-control" type="text" formControlName="um" #um>
+                </div>
+                <div class="col-1">
+                    <label for="acc">Accion</label>
+                    <button type="button" class="btn btn-danger" (click)="AsignarDataU(i)"><img src="assets/svg/buscar.svg" width="25px"></button>
+                </div>
+                <div class="col-1">
+                    <label for="subtotal">Subtotal</label>
+                    <input [ngClass]="{'form-control':true,'is-invalid': detalles.get('subtotal').invalid && detalles.get('subtotal').touched}" type="text" formControlName="subtotal" readonly>
+                    <small class="text-danger" *ngIf="detalles.get('subtotal').errors?.required && detalles.get('subtotal').touched">Subtotal de compra no puede ser vacio</small>
+                </div>
+                <div class="col-1">
+                    <label for="acc">Accion</label>
+                    <button id="acc" class="btn btn-danger btn-block" type="button" (click)="BorrarPregunta(i)">-</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-4" style="text-align:right;">
+                <h2>Subtotal Compra</h2>
+            </div>
+            <div class="col-4" style="text-align:right;">
+                <input type="hidden" name="subtotal" formControlName="subtotal">
+                <h3> {{subtotalc | currency:'COP':'symbol-narrow':'.2-2'}} </h3>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-4" style="text-align:right;">
+                <h2>Iva</h2>
+            </div>
+            <div class="col-4" style="text-align:right;">
+                <h3> {{ivacompra | currency:'COP':'symbol-narrow':'.2-2'}} </h3>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-4" style="text-align:right;">
+                <h2>Total compra</h2>
+            </div>
+            <div class="col-4" style="text-align:right;">
+                <h3> {{totalcompra | currency:'COP':'symbol-narrow':'.2-2'}} </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+
+                <label for="observacion">Observación</label>
+                <textarea class="form-control" id="observacion" rows="3" formControlName="observacion" [class.is-invalid]="observacionNoValido"></textarea>
+                <small *ngIf="observacionNoValido" class="text-danger">
+                  La observacion es un campo requerido
+                </small>
+                <small *ngIf="!observacionNoValido" id="idprov" class="form-text text-muted">{{ nombreProv }}</small>
+
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col">
+                <button class="btn btn-primary btn-block" type="button" (click)="addItem()">+ Agregar nuevo elemento</button>
+            </div>
+        </div>
+        <div class="row justify-content-end pt-2">
+            <div class="col-4" style="text-align:right;">
+                <button class="btn btn-primary btn-block" (click)="CalcularSubtotal()" type="button">Calcular Total Compra</button>
+            </div>
+        </div>
+        <div class="row justify-content-end pt-1">
+            <div class="col-4" style="text-align:right;">
+                <button class="btn btn-success" data-toggle="modal" data-target="#confirmar">Finalizar Compra</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal Supplies -->
+<div class="modal animated fade fadeIn" id="bumedida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="PaisesModalLabel">Buscador de Unidades de Medida</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-umedida (envioDato)="asignarUmed($event)"></app-umedida>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Supplies -->
+<div class="modal animated fade fadeIn" id="bsupplies" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="PaisesModalLabel">Buscador de Paises</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+            </div>
+            <div class="modal-body">
+                <app-bsupplies (envioDato)="asignarSupp($event)"></app-bsupplies>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+            </div>
+            <div class="modal-body">
+                Desea guardar los datos ingresados
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" (click)="onSubmit()" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="eitems" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error detalle compra</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                No se puede realizar el proceso de la compra porque no tiene Items asociados
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Proveedores -->
+<div class="modal animated fade fadeIn" id="bproveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="PaisesModalLabel">Buscador de Paises</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-bproveedor (envioDato)="asignarProv($event)"></app-bproveedor>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Sucursales -->
+<div class="modal animated fade fadeIn" id="bsucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="PaisesModalLabel">Buscador de Paises</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-bsucursal (envioDato)="asignarSuc($event)"></app-bsucursal>
+            </div>
+        </div>
+    </div>
+</div>

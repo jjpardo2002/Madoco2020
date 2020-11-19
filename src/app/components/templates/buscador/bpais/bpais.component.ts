@@ -42,7 +42,6 @@ export class BpaisComponent implements OnInit {
   {
     this.countriService.cargarAllPaisesV().subscribe(
       resp => {
-        console.log(resp);
         this.ELEMENT_DATA = resp;
         this.dataSource.data = this.ELEMENT_DATA;
         this.table.renderRows();
@@ -51,7 +50,6 @@ export class BpaisComponent implements OnInit {
   }
   SearchRowData(id: any){
     this.idPk = id;
-    console.log(id);
     this.countriService.cargarUniquePaisV(id).subscribe(resp => {
       this.envioDato.emit(resp);
       $('#bpaises').modal('hide');

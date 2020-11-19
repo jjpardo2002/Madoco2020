@@ -1,0 +1,32 @@
+<div class="row pb-2">
+    <div class="col-12">
+        <form>
+            <input (keyup)="applyFilter($event)" class="form-control mr-sm-2" type="text" placeholder="Search">
+        </form>
+    </div>
+</div>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSourcesupp" matSort class="mat-elevation-z8" width="100%">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Supplie </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef>Nombre Supplie</th>
+            <td mat-cell *matCellDef="let element"> {{element.item}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"><button class="btn btn-primary" (click)="SearchRowData(element.id)">Seleccionar</button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsSupp"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsSupp;"></tr>
+    </table>
+
+    <mat-paginator showFirstLastButtons></mat-paginator>
+</div>

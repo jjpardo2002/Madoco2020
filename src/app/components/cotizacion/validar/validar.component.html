@@ -1,0 +1,102 @@
+<div class="animated fadeIn fast jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Efectividad cotizacion</h1>
+        <p class="lead">Objetivo</p>
+        <p class="lead">Este modulo permitira gestionar la efectividad de las cotizaciones realizadas</p>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col-12">
+        <form>
+            <input (keyup)="applyFilter($event)" class="form-control mr-sm-2" type="text" placeholder="Search">
+        </form>
+    </div>
+</div>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" width="100%">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id_cotizacion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nro Cotizacion </th>
+            <td mat-cell *matCellDef="let element" width="5%"> {{element.id_cotizacion}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="fecha_coti">
+            <th mat-header-cell *matHeaderCellDef class="headerTabla">Fecha Cotizacion </th>
+            <td mat-cell *matCellDef="let element" width="10%"> {{element.fecha_coti}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="id_ter_cli">
+            <th mat-header-cell *matHeaderCellDef class="headerTabla">Id. Cliente</th>
+            <td mat-cell *matCellDef="let element" width="10%"> {{element.id_ter_cli}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="validez_oferta">
+            <th mat-header-cell *matHeaderCellDef class="headerTabla">Validez de la oferta</th>
+            <td mat-cell *matCellDef="let element" width="10%"> {{element.validez_oferta}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="observacion" width="16%">
+            <th mat-header-cell *matHeaderCellDef class="headerTabla">Observacion de la cotizacion</th>
+            <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select" width="16%">
+            <th mat-header-cell *matHeaderCellDef class="headerTabla"> </th>
+            <td mat-cell *matCellDef="let element"><button class="btn btn-primary" (click)="SearchRowData(element.id_cotizacion)">Validar</button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator showFirstLastButtons></mat-paginator>
+</div>
+<div class="container m-3">
+    <div class="row">
+        <div class="col">
+            <a [routerLink]="['/encuesta']" class="btn btn-primary">Ir a gestion de encuestas y cotizaciones</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ECotizacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Evaluacion de cotizaciones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            </div>
+            <div class="modal-body">
+                <h1>Cotizacion Nro : <small>{{ idPk }}</small></h1>
+                <h3>Fecha de validacion : <small>{{ today }}</small></h3>
+                <form [formGroup]="frmRegistro">
+                    <input type="hidden" name="fecha" formControlName="fecha">
+                    <label class="col-form-label">Adjudicacion</label>
+                    <input class="form-control" list="adjudicado" formControlName="adjudicado" (change)="saveCode($event)">
+                    <datalist id="adjudicado">
+                              <option value="Si">
+                              <option value="No">
+                    </datalist>
+                    <input type="hidden" name="id_car_fk" formControlName="id_car_fk">
+                    <label class="col-form-label">Causa de rechazo</label>
+                    <input class="form-control" list="id_car_fk" (change)="saveCodeCausa($event)">
+                    <datalist id="id_car_fk">
+                              <option *ngFor="let item of CAUSAS" value="{{item.motivo}}">
+                    </datalist>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

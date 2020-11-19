@@ -50,7 +50,6 @@ export class BstateComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   SearchRowData(id: string){
-    console.log('Idddd ' + id);
     this.ciudadService.getUniqueStateV(id).subscribe(resp => {
       console.log(resp);
       this.envioDato.emit(resp);

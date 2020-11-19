@@ -84,6 +84,18 @@ import { BregionComponent } from './components/templates/buscador/bregion/bregio
 import { BstateComponent } from './components/templates/buscador/bstate/bstate.component';
 import { BrolsComponent } from './components/templates/buscador/brols/brols.component';
 import { TypepersonComponent } from './components/templates/buscador/typeperson/typeperson.component';
+import { BfproviderComponent } from './components/templates/buscador/bfprovider/bfprovider.component';
+import { BsfproviderComponent } from './components/templates/buscador/bsfprovider/bsfprovider.component';
+import { GcotizacionComponent } from './components/gcotizacion/gcotizacion.component';
+import { ValidarComponent } from './components/cotizacion/validar/validar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OrdenComponent } from './components/compras/ordenc/orden/orden.component';
+import { BsuppliesComponent } from './components/templates/buscador/bsupplies/bsupplies.component';
+import { BproveedorComponent } from './components/templates/buscador/bproveedor/bproveedor.component';
+import { BsucursalComponent } from './components/templates/buscador/bsucursal/bsucursal.component';
+import { UmedidaComponent } from './components/templates/buscador/umedida/umedida.component';
+import { MetasComponent } from './components/cotizacion/metas/metas.component';
+import { InformeindComponent } from './components/cotizacion/informeind/informeind.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +133,17 @@ import { TypepersonComponent } from './components/templates/buscador/typeperson/
     BstateComponent,
     BrolsComponent,
     TypepersonComponent,
+    BfproviderComponent,
+    BsfproviderComponent,
+    GcotizacionComponent,
+    ValidarComponent,
+    OrdenComponent,
+    BsuppliesComponent,
+    BproveedorComponent,
+    BsucursalComponent,
+    UmedidaComponent,
+    MetasComponent,
+    InformeindComponent,
 
   ],
   imports: [
@@ -180,10 +203,11 @@ import { TypepersonComponent } from './components/templates/buscador/typeperson/
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    FontAwesomeModule,
   ],
   providers: [
     MenuService,
-    {provide: MAT_DATE_LOCALE, useValue: 'es-GB'}
+    {provide: MAT_DATE_LOCALE, useValue: 'es-CO'}
   ],
   bootstrap: [AppComponent]
 })

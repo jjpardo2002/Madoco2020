@@ -14,7 +14,7 @@
                         <div class="col-3">
                             <mat-form-field hintLabel="Max 20 Caracteres" class="example-full-width">
                                 <mat-label>Nit o Cedula</mat-label>
-                                <input matInput #sizeId maxlength="20" formControlName="id" placeholder="Id. Proveedor">
+                                <input matInput #sizeId maxlength="20" formControlName="id" placeholder="Id. Proveedor" (keyup)="calcular(sizeId.value)">
                                 <mat-hint align="end">{{sizeId.value?.length || 0}}/20</mat-hint>
                             </mat-form-field>
                         </div>
@@ -44,75 +44,142 @@
                         <div class="col-6">
                             <mat-form-field hintLabel="Max 250 Caracteres" class="example-full-width">
                                 <mat-label>Dirección</mat-label>
-                                <input matInput #sizeDir maxlength="1" formControlName="direccion" placeholder="Dirección">
+                                <input matInput #sizeDir maxlength="255" formControlName="direccion" placeholder="Dirección">
                                 <mat-hint align="end">{{sizeDir.value?.length || 0}}/250</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row margenRow">
+                        <div class="col-3" style="margin-top: 15px;margin-bottom:0px">
+                            <div class="row">
+                                <div class="col-12 p-2 ml-3">
+                                    <mat-hint align="start">Pais</mat-hint>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <span matBadge="{{idPais}}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombrePais }}</mat-label></span>
+                                </div>
+                                <div class="col-2" style="margin-right: 1px;">
+                                    <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bpaises">
+                                    <mat-icon>search</mat-icon>
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-3" style="margin-top: 15px;">
-                            <span matBadge="{{idPais}}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombrePais }}</mat-label></span>
-                        </div>
-                        <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bpaises">
-                        <mat-icon>search</mat-icon>
-                      </button>
-                        </div>
-                        <div class="col-3" style="margin-top: 15px;">
-                            <span matBadge="{{ idRegion }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreRegion }}</mat-label></span>
-                        </div>
-                        <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bregiones" (click)="childRegion.getRegiones()">
-                      <mat-icon>search</mat-icon>
-                    </button>
+                            <div class="row">
+                                <div class="col-12 p-2 ml-3">
+                                    <mat-hint align="start">Departamento</mat-hint>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <span matBadge="{{ idRegion }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreRegion }}</mat-label></span>
+                                </div>
+                                <div class="col-2" style="margin-right: 1px;">
+                                    <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bregiones" (click)="childRegion.getRegiones()">
+                              <mat-icon>search</mat-icon>
+                            </button>
+                                </div>
+
+                            </div>
                         </div>
                         <div class="col-3" style="margin-top: 15px;">
                             <input type="hidden" formControlName="id_ciudad">
-                            <span matBadge="{{ idCiudad }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreCiudad }}</mat-label></span>
-                        </div>
-                        <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bciudades" (click)="childCiudad.getCiudades()">
-                    <mat-icon>search</mat-icon>
-                  </button>
+                            <div class="row">
+                                <div class="col-12 p-2 ml-3">
+                                    <mat-hint align="start">Ciudad</mat-hint>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <span matBadge="{{ idCiudad }}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreCiudad }}</mat-label></span>
+                                </div>
+                                <div class="col-2" style="margin-right: 1px;">
+                                    <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#bciudades" (click)="childCiudad.getCiudades()">
+                                    <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
                     <div class="row margenRow">
                         <div class="col-3" style="margin-top: 15px;">
-                            <input type="hidden" formControlName="id_rol">
-                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">Rol .....</mat-label></span>
-                        </div>
-                        <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar">
-                          <mat-icon>search</mat-icon>
-                        </button>
+                            <div class="row">
+                                <div class="col-12 p-2 ml-3">
+                                    <mat-hint align="start">Tipo de persona</mat-hint>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="hidden" formControlName="id_rol">
+                                    <span matBadge="{{idRol}}" matBadgeOverlap="false" matBadgePosition="before"><mat-label class="lblinfo">{{ nombreRol }}</mat-label></span>
+                                </div>
+                                <div class="col-2" style="margin-right: 1px;">
+                                    <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#broles">
+                                <mat-icon>search</mat-icon>
+                              </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-3" style="margin-top: 15px;">
-                            <input type="hidden" formControlName="id_rol">
-                            <span matBadge="4" matBadgeOverlap="false" matBadgePosition="before" matBadgeColor="accent"></span>
-                            <mat-label class="lblinfo">Regimen</mat-label>
-                        </div>
-                        <div class="col-1" style="margin-top: 15px;">
-                            <button mat-icon-button style="color: black;" aria-label="Buscar">
-                        <mat-icon>search</mat-icon>
-                      </button>
+                            <div class="row">
+                                <div class="col-12 p-2 ml-3">
+                                    <mat-hint align="start">Tipo de Proveedor</mat-hint>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="hidden" formControlName="id_regimen">
+                                    <span matBadge="{{ idTPer }}" matBadgeOverlap="false" matBadgePosition="before" matBadgeColor="accent"></span>
+                                </div>
+                                <div class="col-2" style="margin-right: 1px;">
+                                    <button mat-icon-button style="color: black;" aria-label="Buscar" data-toggle="modal" data-target="#btpersona">
+                                    <mat-icon>search</mat-icon>
+                                  </button>
+                                </div>
+                            </div>
+                            <mat-label class="lblinfo">{{ nombreTPer }}</mat-label>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <button mat-button matStepperNext>Next</button>
+                    <button mat-button data-toggle="modal" data-target="#confirmar">Guardar Información</button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmacion</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                            </div>
+                            <div class="modal-body">
+                                Desea guardar los datos ingresados
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" (click)="enviarDatos()" class="btn btn-primary" matStepperNext>Guardar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </mat-card>
     </mat-step>
 
     <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
+        <ng-template matStepLabel>Finalizar</ng-template>
+        <p>El proceso finalizo</p>
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button matStepperPrevious>Regresar</button>
+            <button mat-button (click)="stepper.reset()">Igresar otro proveedor</button>
         </div>
     </mat-step>
 
@@ -123,7 +190,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Buscador de Paises</h2>
+                <h2 class="modal-title" id="PaisesModalLabel">Buscador de Paises</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -140,7 +207,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Buscador de Regiones</h2>
+                <h2 class="modal-title" id="RegionModalLabel">Buscador de Regiones</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -157,13 +224,45 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Buscador de Ciudades</h2>
+                <h2 class="modal-title" id="CiudadModalLabel">Buscador de Ciudades</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button>
             </div>
             <div class="modal-body">
                 <app-bstate [idRegion]="idRegion" (envioDato)="asignarCiudad($event)" #childCiudad></app-bstate>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="broles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="RolesModalLabel">Buscador de roles</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-brols (envioDato)="asignarRol($event)"></app-brols>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal animated fade fadeIn" id="btpersona" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="RolesModalLabel">Buscador de Tipo de Persona</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+            </div>
+            <div class="modal-body">
+                <app-typeperson (envioDato)="asignarTipoPer($event)"></app-typeperson>
             </div>
         </div>
     </div>

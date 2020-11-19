@@ -89,6 +89,13 @@ export class MiencuestaComponent implements OnInit {
     RFormArray.insert(RFormArray.length, RFormGroup);
   }*/
   onSubmit(){
-    console.log(JSON.stringify(this.frmRegistro.value));
+    if (this.frmRegistro.valid) {
+      this.miencuestaService.InsertEncuesta(this.frmRegistro.value).subscribe(resp => {
+        console.log(resp);
+        this.rtas.clear();
+        this.frmRegistro.reset();
+       // $('#CMessage').modal('show');
+      });
+    }
   }
 }

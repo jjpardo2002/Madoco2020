@@ -1,0 +1,142 @@
+html {
+    font-size: 15px;
+}
+
+.colinfo {
+    background-color: #eeeeee;
+}
+
+p {
+    font-weight: 600;
+    margin: 0 0 0px;
+}
+
+.infocoti {
+    width: 100%;
+    background: rgb(233, 233, 233);
+    background: linear-gradient(180deg, rgba(233, 233, 233, 1) 0%, rgba(241, 241, 241, 0.4150035014005602) 44%, rgba(244, 244, 244, 0.09007352941176472) 64%, rgba(236, 236, 236, 0.11248249299719892) 79%, rgba(252, 252, 252, 0.8102591378348214) 100%);
+}
+
+thead th {
+    text-align: center;
+}
+
+html {
+    font-size: 13px;
+    font-family: DejaVu Sans, sans-serif;
+}
+
+.Tabla {
+    border-left: 0.5px;
+    border-top: 1px;
+    border-bottom: 1px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-color: #969191;
+    border-bottom-color: #969191;
+    width: 100%;
+    margin: 0;
+    margin-top: 30px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.Tabla tr td {
+    padding-left: 30px;
+    width: 43%;
+    font-weight: bold;
+    background-color: #ECE9E9;
+}
+
+.TablaCalidad {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #969191;
+    border-bottom-color: #969191;
+    width: 100%;
+    margin-top: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.TablaLogo {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #969191;
+    border-bottom-color: #969191;
+    width: 100%;
+    margin-top: 1px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.TablaResumen {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #969191;
+    border-bottom-color: #969191;
+    width: 100%;
+    margin-top: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.TablaDetalle {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #969191;
+    border-bottom-color: #969191;
+    width: 100%;
+    margin-top: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.TablaDetalle tr td {
+    background-color: #ECE9E9;
+}
+
+.ResumenPago tr #idetalle {
+    text-align: center;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #969191;
+    height: 30px;
+    font-size: 11pt;
+}
+
+.Condiciones {
+    margin-top: 3px;
+    width: 100%;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #969191;
+}
+
+.Condiciones tr {
+    height: 25px;
+}
+
+.Condiciones tr #label {
+    background-color: #ECE9E9;
+    text-align: center;
+    font-weight: bold;
+}

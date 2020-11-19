@@ -14,24 +14,6 @@ export class MenuService {
       submenu: []
     },
     {
-          id:  2,
-          imagen: 'assets/svg/encuesta.svg',
-          titulo: 'Modulo de Quejas y Reclamos',
-          pagina: 'encuesta',
-          descripcion: 'En este modulo se podran registrar las diferentes Incidencias.',
-          idname: 'pqr',
-          submenu: []
-    },
-    {
-          id:  3,
-          imagen: 'assets/svg/encuesta.svg',
-          titulo: 'Modulo de Parametros',
-          pagina: 'encuesta',
-          descripcion: 'En este modulo se podran gestionar los parametros del sistema SGCTI MadocoXXI.',
-          idname: 'param',
-          submenu: []
-    },
-    {
           id:  4,
           imagen: 'assets/svg/compra.svg',
           titulo: 'Modulo de Compras',
@@ -61,9 +43,9 @@ export class MenuService {
     {
       imagen: 'assets/svg/ocompra.svg',
       titulo: 'Orden de compra',
-      pagina: 'ocompra',
+      pagina: 'ordenc',
       descripcion: 'Este modulo permite realizar nuevas ordenes de compra.',
-      idname: 'ocomp',
+      idname: 'ordenc',
     },
     {
       imagen: 'assets/svg/devcompra.svg',
@@ -83,12 +65,26 @@ export class MenuService {
       idname: 'encu',
       },
       {
-        imagen: 'assets/svg/Reponder.svg',
-        titulo: 'Preguntas',
-        pagina: 'preguntas',
-        descripcion: 'Este modulo permite crear nuevas encuestas.',
-        idname: 'lstp',
-        }
+        imagen: 'assets/svg/encuestam.svg',
+        titulo: 'Gestion de cotizaciones',
+        pagina: 'validarc',
+        descripcion: 'Este modulo permite gestionar Indices efectividad en cotizaciones',
+        idname: 'validarc',
+      },
+      {
+        imagen: 'assets/svg/encuestam.svg',
+        titulo: 'Indicador de metas',
+        pagina: 'metas',
+        descripcion: 'Este modulo permite gestionar Indicadores de cotizacion',
+        idname: 'mnumeta',
+      },
+      {
+        imagen: 'assets/svg/encuestam.svg',
+        titulo: 'Informe Indicador de cotizacion.',
+        pagina: 'infoind',
+        descripcion: 'Informe Indicadores de cotizacion.',
+        idname: 'infoind',
+      }
     ];
   idAux: number;
   constructor() { }
